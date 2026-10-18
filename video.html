@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniimbita ka ni oiG 🎈</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page-video">
+  <div class="stars"></div>
+
+  <main class="card">
+    <h1 class="title small">Iniimbita ka ni oiG</h1>
+    <p class="subtitle">
+      October 24, Saturday Bday ko eh. Pero cecelebrate natin ng October 25,
+      Sunday. Try mo punta lods
+    </p>
+
+    <div class="video-wrap">
+      <video
+        id="bdayVideo"
+        src="media/video_2026-10-18_13-49-26.mp4"
+        controls
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      >
+        Your browser doesn't support embedded video.
+      </video>
+    </div>
+
+    <div class="details">
+      <p class="detail">
+        <span class="label">Time and Date:</span>
+        October 25, 2026 &ndash; Anytime after 11
+      </p>
+      <p class="detail">
+        <span class="label">Location:</span>
+        Block 4 Lot 62, Euphorbia Street, South Spring Heights, Sto. Tomas, Batangas.
+      </p>
+    </div>
+
+    <a href="index.html" class="btn ghost">← Back</a>
+  </main>
+
+  <script>
+    // Autoplay requires the video to start muted (browser rule). We start muted
+    // so it plays immediately, then try to turn the sound on. If the browser
+    // blocks it, the user can unmute with the video controls or the button below.
+    const video = document.getElementById('bdayVideo');
+
+    video.addEventListener('canplay', () => {
+      video.play().catch(() => {});
+      const tryUnmute = () => {
+        video.muted = false;
+        video.play().catch(() => { video.muted = true; });
+      };
+      // Attempt to unmute; fall back to muted autoplay if blocked.
+      tryUnmute();
+      syncIcon();
+    }, { once: true });
+
+    // Mute / unmute button for the video, lower-left
+    const muteBtn = document.getElementById('muteBtn');
+    const muteIcon = document.getElementById('muteIcon');
+
+    function syncIcon() {
+      muteIcon.textContent = video.muted ? '🔇' : '🔊';
+      muteBtn.setAttribute('aria-label', video.muted ? 'Unmute video' : 'Mute video');
+    }
+
+    muteBtn.addEventListener('click', () => {
+      video.muted = !video.muted;
+      if (!video.muted) video.play().catch(() => {});
+      syncIcon();
+    });
+  </script>
+
+  <!-- Mute / unmute button, lower-left -->
+  <button id="muteBtn" class="mute-btn" type="button" aria-label="Mute video">
+    <span id="muteIcon">🔇</span>
+  </button>
+</body>
+</html>

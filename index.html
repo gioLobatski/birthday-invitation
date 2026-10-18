@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Invited! 🎉</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page-cover">
+  <div class="stars"></div>
+
+  <main class="card">
+    <h1 class="title">May pakana nanaman akong bago lopit talaga</h1>
+    <p class="subtitle">Anyways invitation to, click mo button para makita laman</p>
+
+    <a href="video.html" id="openBtn" class="btn">
+      Open Invitation
+    </a>
+
+    <!-- Background music for the cover page -->
+    <audio id="bgMusic" src="media/video_2026-10-18_13-49-22.mp3" loop preload="auto"></audio>
+  </main>
+
+  <!-- Mute / unmute button, lower-left -->
+  <button id="muteBtn" class="mute-btn" type="button" aria-label="Mute music">
+    <span id="muteIcon">🔊</span>
+  </button>
+
+  <script>
+    const music = document.getElementById('bgMusic');
+    const openBtn = document.getElementById('openBtn');
+    const muteBtn = document.getElementById('muteBtn');
+    const muteIcon = document.getElementById('muteIcon');
+
+    // Browsers block autoplay with sound, so we try now and also on first click.
+    music.play().catch(() => { /* will start on button click instead */ });
+
+    openBtn.addEventListener('click', () => {
+      music.play().catch(() => {});
+    });
+
+    function syncIcon() {
+      muteIcon.textContent = music.muted ? '🔇' : '🔊';
+      muteBtn.setAttribute('aria-label', music.muted ? 'Unmute music' : 'Mute music');
+    }
+
+    muteBtn.addEventListener('click', () => {
+      music.muted = !music.muted;
+      if (!music.muted) music.play().catch(() => {});
+      syncIcon();
+    });
+
+    syncIcon();
+  </script>
+</body>
+</html>
